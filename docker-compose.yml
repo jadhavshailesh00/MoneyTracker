@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  budget:
+    image: ${DOCKER_REGISTRY-}budget
+    build:
+      context: Service
+      dockerfile: Dockerfile
+  sqlserverdb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Strong@Passw0rd123
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserverdata:/var/opt/mssql
+
+volumes:
+  sqlserverdata:
